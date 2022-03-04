@@ -12,24 +12,35 @@ def visualize(m):
         return f"N{node.row},{node.col}"
     # TODO: draws multiple edges
     G = nx.Graph()
-    node_pos = {}
+    visited_node_pos = {}
+    unvisited_node_pos = {}
     traversable_edges = []
     blocked_edges = []
     for row in range(m.ROWS):
         for col in range(m.COLS):
             node = m.board[row][col]
             node_label = create_node_label(node)
-            node_pos[node_label] = (row, col)
+            if node.visited:
+                visited_node_pos[node_label] = (row, col)
+            else:
+                unvisited_node_pos[node_label] = (row, col)
             for n in node.traversable:
                 traversable_edges.append((node_label, create_node_label(n)))
             for n in node.blocked:
                 blocked_edges.append((node_label, create_node_label(n)))
+
+    all_node_pos = visited_node_pos.copy()
+    all_node_pos.update(unvisited_node_pos)
     # Don't worry about building a graph...Just need for visualizing
     # G.add_edges_from(edges)
-    G.add_nodes_from(node_pos.keys())
-    nx.draw_networkx_nodes(G, node_pos) # Make sure to draw all nodes
-    nx.draw_networkx_edges(G, node_pos, edgelist=traversable_edges, edge_color='black', arrows=False)
-    nx.draw_networkx_edges(G, node_pos, edgelist=blocked_edges, edge_color='red', arrows=False)
+    G.add_nodes_from(visited_node_pos.keys())
+    G.add_nodes_from(unvisited_node_pos.keys())
+
+    nx.draw_networkx_nodes(G, visited_node_pos, nodelist=visited_node_pos.keys(), node_color='green') # Make sure to draw all nodes
+    nx.draw_networkx_nodes(G, unvisited_node_pos, nodelist=unvisited_node_pos.keys(), node_color='black') # Make sure to draw all nodes
+
+    nx.draw_networkx_edges(G, all_node_pos, edgelist=traversable_edges, edge_color='black', arrows=False)
+    nx.draw_networkx_edges(G, all_node_pos, edgelist=blocked_edges, edge_color='red', arrows=False)
 
     plt.show()
 
