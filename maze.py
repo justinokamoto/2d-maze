@@ -69,7 +69,7 @@ class Maze:
     def is_reachable(self, x, y):
         """
         A node is reachable if any non-blocked neighbors are visited, or
-        any neighbors are reachable (recursive)
+        if any neighbors are reachable (recursive)
         """
         visited_nodes = set() # TODO: Better distinguish between visited concepts
         # BFS starting from initial node
@@ -85,7 +85,6 @@ class Maze:
         return False
 
     def build(self, row=0, col=0):
-        """ default x,y is bottom right """
         node = self.get_node(row, col)
         node.visited = True
         neighbors = self.get_neighbors(node.row, node.col)
