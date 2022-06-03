@@ -5,6 +5,8 @@ from maze import Maze
 import logging
 from player import Player
 
+logger = logging.getLogger()
+
 
 class GameState(Enum):
     STARTED = "STARTED"
@@ -32,21 +34,21 @@ class Game:
 
     def take_turn(self, direction):
         if self.state == GameState.ENDED:
-            logging.error("Game has ended.")
+            logger.error("Game has ended.")
             return
 
         player = self.current_turn()
         des_pos = Direction.translation(player.pos, direction)
 
-        logging.info(f"Player {player.name} attempts to move {player.pos} -> {des_pos}")
+        logger.debug(f"Player {player.name} attempts to move {player.pos} -> {des_pos}")
 
         if not self._board.can_move(player.pos, des_pos):
-            logging.info(f"Player {player.name} turn failed.")
+            logger.debug(f"Player {player.name} turn failed.")
             return
 
         # Update state
         player.pos = des_pos # Update player position
         self.turn_counter += 1 # Update turn counter
         if player.pos == self._board.end_pos: # Update state (if winner)
-            logging.info(f"Player {player.name} won.")
+            logger.debug(f"Player {player.name} won.")
             self.state = GameState.ENDED
