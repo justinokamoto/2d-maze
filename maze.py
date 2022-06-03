@@ -2,6 +2,7 @@ from typing import Tuple, List
 import random
 from weakref import WeakSet
 
+# TODO: Make simple callable
 # TODO: Standardize on row,col opposed to x,y
 # TODO: 'traversable' edges are really implied by 'blocked' and vice-versa, right? (we can remove one)
 
@@ -39,6 +40,7 @@ class MazeNode:
         n2.blocked.remove(n1)
 
 
+# TODO: Rename these classes to [Maze|Board]Generator and make them callables
 class Maze:
     def __init__(self, cols=10, rows=10):
         # NOTE: Values could be derived from board shape?
