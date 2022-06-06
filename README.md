@@ -11,25 +11,25 @@ competition.
 
 2. Install requirements
 ```
-pip -r requirements
+% pip -r requirements
 ```
 
 3. Run the maze server
 ```
 # Starts the flask server on port 8080
-FLASK_APP=server python -m flask run -p 8080
+% FLASK_APP=server python -m flask run -p 8080
 ```
 
 ### Running simulation with fake client
 Run a client that randomly sends directional movements to the server.
 ```
-python simulate_gameplay.py
+% python simulate_gameplay.py
 ```
 
 ### Running simulation without server-client architecture
 Runs a game simulation with server component.
 ```
-python simulate_gameplay
+% python simulate_gameplay
 ```
 
 ## Endpoints
